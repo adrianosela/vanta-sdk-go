@@ -23,10 +23,17 @@ v, err := vanta.New(
 )
 // check err
 
-listPeopleOutput, err := v.ListPeople(ctx)
+output, err := v.ListVulnerabilities(
+    ctx,
+    vanta.WithPageSize(100),
+    vanta.WithSearchQuery("openssl"),
+    vanta.WithIsFixAvailable(true),
+    vanta.WithSeverity(vanta.VulnerabilitySeverityCritical),
+    vanta.WithSLADeadlineBeforeDate(time.Now().Add(time.Hour*24*30)),
+)
 // check err
 
-for _, person := range listPeopleOutput.Results.Data {
+for _, vulnerability := range output.Results.Data {
     // do something useful
 }
 ```
