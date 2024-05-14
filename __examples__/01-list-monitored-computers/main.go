@@ -27,6 +27,19 @@ func main() {
 	}
 
 	for _, monitoredComputer := range listMonitoredComputersOutput.Results.Data {
-		fmt.Println(monitoredComputer)
+		serial := "N/A"
+		if monitoredComputer.SerialNumber != nil {
+			serial = *monitoredComputer.SerialNumber
+		}
+		fmt.Printf(
+			"%s: %s (OS=%s) ScreenLock=%s DiskEncryption=%s PasswordManager=%s AntivirusInstallation=%s\n",
+			monitoredComputer.Owner.EmailAddress,
+			serial,
+			monitoredComputer.OperatingSystem.Type,
+			monitoredComputer.ScreenLock.Outcome,
+			monitoredComputer.DiskEncryption.Outcome,
+			monitoredComputer.PasswordManager.Outcome,
+			monitoredComputer.AntivirusInstallation.Outcome,
+		)
 	}
 }
